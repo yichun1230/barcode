@@ -17,10 +17,10 @@ import 'package:image_picker/image_picker.dart';
 // }
 
 
-class ocr extends StatelessWidget {
+class MyApp extends StatelessWidget {
 
-  String value;
-  ocr({this.value});
+  // String value;
+  // ocr({this.value});
   static final String title = 'Firebase OCR';
 
   @override
@@ -28,22 +28,22 @@ class ocr extends StatelessWidget {
     debugShowCheckedModeBanner: false,
     title: title,
     theme: ThemeData(primarySwatch: Colors.green),
-    home: HomePage(value),
+    home: Ocr(),
   );
 }
-class HomePage extends StatefulWidget {
+class Ocr extends StatefulWidget {
 
   String value;
-  HomePage(this.value);
+  Ocr({this.value});
 
   @override
-  _HomePageState createState() => _HomePageState(this.value);
+  _OcrState createState() => _OcrState(this.value);
 }
 
-class _HomePageState extends State<HomePage> {
+class _OcrState extends State<Ocr> {
 
   String value;
-  _HomePageState(this.value);
+  _OcrState(this.value);
 
   int isnum=0;//是否已讀經過大卡
   String all,pack,kcal,pro,fat,fat1,fat2,carb,na;//營養標示

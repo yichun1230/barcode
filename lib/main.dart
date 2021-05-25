@@ -108,7 +108,7 @@ class _MyAppState extends State<MyApp> {
                               await scanBarcodeNormal();
                               if(_exit==false){  Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => ocr(value: _scanBarcode)),
+                                MaterialPageRoute(builder: (context) => Ocr(value: _scanBarcode)),
                               ).then((value) {
                                 setState(() {
                                   // refresh state
