@@ -68,8 +68,8 @@ class _MyAppState extends State<MyApp> {
                                 context,
                                 MaterialPageRoute(builder: (context) => Ocr(value: _scanBarcode)),);
                               }
-                              //else
-                                //Navigator.push(context, MaterialPageRoute(builder: (context) => ScanResult(barcodeScanRes: _scanBarcode)),);
+                              else
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => ScanResult(value: _scanBarcode)),);
                             },
                             child: Text("Start barcode scan")),
                         //contentWidget,

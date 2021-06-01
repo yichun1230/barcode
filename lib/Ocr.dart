@@ -350,7 +350,7 @@ class _OcrState extends State<Ocr> {
                       await ref.doc(value).set
                         ({'name':_txtName.text,
                           'perpack':_txtAll.text,
-                          'packnum':int.parse(_txtPack.text),
+                          'packnum':_txtPack.text,
                           'calorie':_txtKcal.text,
                           'protein':_txtPro.text,
                           'fat':_txtFat.text,
@@ -359,6 +359,7 @@ class _OcrState extends State<Ocr> {
                             _txtName.clear(),_txtAll.clear(),_txtPack.clear(),
                             _txtKcal.clear(),_txtPro.clear(),_txtFat.clear(),_txtCarb.clear()});
                       Navigator.pop(context);
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ScanResult(value: value)),);
                     },
                   ),
             ),

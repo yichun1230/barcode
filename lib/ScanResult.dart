@@ -28,26 +28,43 @@ class MyApp extends StatelessWidget {
 
 class ScanResult extends StatefulWidget{
 
+  String value;
+  ScanResult({this.value});
+
   @override
-  _ScanResultState createState() => _ScanResultState();
+  _ScanResultState createState() => _ScanResultState(this.value);
 }
 
 class _ScanResultState extends State<ScanResult> {
 
+  String value;
+  _ScanResultState(this.value);
+
   final ref = FirebaseFirestore.instance.collection('barcode');
-  String pro,car,fat,cal,name,pack,total,barcodeScanRes="4710543002305";
+  String  pro,car,fat,cal,name,pack,total;//,barcodeScanRes="4710543002305";
   bool _PlussEnabled,_MinusEnabled;
   int num=1;
 
-void initState() {
-     ref.doc(barcodeScanRes).get().then((DocumentSnapshot doc) {
-        name = doc.data()['name'];
-        cal = doc.data()['calorie'];
-        pro = doc.data()['protein'];
-        fat = doc.data()['fat'];
-        car = doc.data()['carbohydrate'];
-        pack = doc.data()['perpack'];
-        total = doc.data()['packnum'];
+
+   Future<void> setData() async {
+     await ref.doc(value).get().then((DocumentSnapshot doc) {
+      String _name = doc.data()['name'];
+      String _cal = doc.data()['calorie'];
+      String _pro = doc.data()['protein'];
+      String _fat = doc.data()['fat'];
+      String _car = doc.data()['carbohydrate'];
+      String _pack = doc.data()['perpack'];
+      String _total = doc.data()['packnum'];
+
+      setState(() {
+        name=_name;
+        cal=_cal;
+        pro=_pro;
+        fat=_fat;
+        car=_car;
+        pack=_pack;
+        total=_total;
+      });
     });
   }
 
@@ -57,6 +74,8 @@ void initState() {
   }
   @override
   Widget build(BuildContext context) {
+
+     setData();
 
     (num<int.parse(total))? _PlussEnabled=true : _PlussEnabled=false ;
     (num==1)? _MinusEnabled=false : _MinusEnabled=true ;
@@ -68,7 +87,7 @@ void initState() {
       body: Stack(
         children: [
           ListTile(
-            contentPadding: EdgeInsets.only(top: height*0.18,left: width*0.07),
+            contentPadding: EdgeInsets.only(top: height*0.18,left: width*0.05,right: width*0.02),
             title: Text(name,
               style: TextStyle(
                 fontWeight: FontWeight.w500,
@@ -96,7 +115,7 @@ void initState() {
                       ),
                     child: Container(
                       color: Colors.white,
-                      padding: const EdgeInsets.only(top: 30, left: 13, right: 10, bottom: 10),
+                      padding: const EdgeInsets.only(top: 30, left: 18, right: 8, bottom: 10),
                       child: Column(
                         children:<Widget>[
                           SizedBox(height: width*0.13,),
@@ -156,7 +175,7 @@ void initState() {
                                 child: Icon(FontAwesomeIcons.minus,color: Color(0xff220055),
                                 size: 30,),
                                 shape: CircleBorder(),
-                                elevation: 5.0,
+                                elevation:5.0,
                                 fillColor: Color(0xffFAF4F2),
                                 padding: const EdgeInsets.all(10.0),
                               ),
@@ -235,7 +254,7 @@ class _RadialProgress extends StatelessWidget{
               textAlign: TextAlign.center,
               text: TextSpan(
                 children: [
-                  TextSpan(text: cal.toString(),style: TextStyle(
+                  TextSpan(text: cal.toStringAsFixed(1),style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.w700,
                       color: const Color(0xFF200087)
