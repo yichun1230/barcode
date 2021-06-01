@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:barcode_scanner/Ocr.dart';
 
+import 'ScanResult.dart';
 import 'addData.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,10 +27,56 @@ class _MyAppState extends State<MyApp> {
   String _name="";
   String _calorie="",_pro="",_fat="",_carb="";
   bool _exit=false;
+
   @override
   Future initState() {
     super.initState();
   }
+  @override
+  Widget build(BuildContext context) {
+
+    Widget swapWidget;
+    Widget contentWidget;
+
+    if (_exit==false) {
+      contentWidget=new Text("");
+    } else {
+      contentWidget=new Text("條碼 :"+_scanBarcode+"\n"
+          +"品名 :"+_name+"\n"
+          +"熱量 :"+_calorie+"\n"
+          +"蛋白質 :"+_pro+"\n"
+          +"脂肪 :"+_fat+"\n"
+          +"碳水化合物 :"+_carb+"\n",
+
+          style: TextStyle(fontSize: 20));
+    }
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+            appBar: AppBar(title: const Text('Barcode scan')),
+            body: Builder(builder: (BuildContext context) {
+              return Container(
+                  alignment: Alignment.center,
+                  child: Flex(
+                      direction: Axis.vertical,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        RaisedButton(
+                            onPressed: () async {
+                              await scanBarcodeNormal();
+                              if(_exit==false){  Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => Ocr(value: _scanBarcode)),);
+                              }
+                              //else
+                                //Navigator.push(context, MaterialPageRoute(builder: (context) => ScanResult(barcodeScanRes: _scanBarcode)),);
+                            },
+                            child: Text("Start barcode scan")),
+                        //contentWidget,
+                      ]));
+            })));
+  }
+
   Future<void> scanBarcodeNormal() async {
 
     String barcodeScanRes;
@@ -68,60 +115,7 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
 
-    Widget swapWidget;
-    Widget contentWidget;
-
-    if (_exit==false) {
-      swapWidget = new Text("不存在");
-      contentWidget=new Text("");
-    } else {
-      swapWidget = new Text("存在");
-      contentWidget=new Text("條碼 :"+_scanBarcode+"\n"
-          +"品名 :"+_name+"\n"
-          +"熱量 :"+_calorie+"\n"
-          +"蛋白質 :"+_pro+"\n"
-          +"脂肪 :"+_fat+"\n"
-          +"碳水化合物 :"+_carb+"\n",
-
-          style: TextStyle(fontSize: 20));
-    }
-
-    var swapTile = new ListTile(
-      title: swapWidget,
-    );
-
-    return MaterialApp(
-        home: Scaffold(
-            appBar: AppBar(title: const Text('Barcode scan')),
-            body: Builder(builder: (BuildContext context) {
-              return Container(
-                  alignment: Alignment.center,
-                  child: Flex(
-                      direction: Axis.vertical,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        RaisedButton(
-                            onPressed: () async {
-                              await scanBarcodeNormal();
-                              if(_exit==false){  Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => Ocr(value: _scanBarcode)),
-                              ).then((value) {
-                                setState(() {
-                                  // refresh state
-                                });
-                              });
-                              ;}
-                            },
-                            child: Text("Start barcode scan")),
-                        contentWidget,
-                        swapTile,
-                      ]));
-            })));
-  }
 
 }
 class SecondRoute extends StatelessWidget {

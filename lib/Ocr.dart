@@ -9,6 +9,8 @@ import 'package:image_cropper/image_cropper.dart';
 //import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
 
+import 'ScanResult.dart';
+
 
 // Future<void> main() async {
 //   WidgetsFlutterBinding.ensureInitialized();
@@ -348,7 +350,7 @@ class _OcrState extends State<Ocr> {
                       await ref.doc(value).set
                         ({'name':_txtName.text,
                           'perpack':_txtAll.text,
-                          'packnum':_txtPack.text,
+                          'packnum':int.parse(_txtPack.text),
                           'calorie':_txtKcal.text,
                           'protein':_txtPro.text,
                           'fat':_txtFat.text,
