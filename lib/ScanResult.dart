@@ -40,6 +40,8 @@ class _ScanResultState extends State<ScanResult> {
   String value;
   _ScanResultState(this.value);
 
+
+
   final ref = FirebaseFirestore.instance.collection('barcode');
   String  pro,car,fat,cal,name,pack,total;//,barcodeScanRes="4710543002305";
   bool _PlussEnabled,_MinusEnabled;
@@ -47,7 +49,7 @@ class _ScanResultState extends State<ScanResult> {
 
 
    Future<void> setData() async {
-     await ref.doc(value).get().then((DocumentSnapshot doc) {
+     await ref.doc(value).get().then((DocumentSnapshot doc) async {
       String _name = doc.data()['name'];
       String _cal = doc.data()['calorie'];
       String _pro = doc.data()['protein'];
@@ -56,7 +58,7 @@ class _ScanResultState extends State<ScanResult> {
       String _pack = doc.data()['perpack'];
       String _total = doc.data()['packnum'];
 
-      setState(() {
+      await setState(() async{
         name=_name;
         cal=_cal;
         pro=_pro;
@@ -73,7 +75,7 @@ class _ScanResultState extends State<ScanResult> {
     (num<=1) ? _MinusEnabled=false : _MinusEnabled=true;
   }
   @override
-  Widget build(BuildContext context) {
+ Widget build(BuildContext context) {
 
      setData();
 
@@ -82,7 +84,7 @@ class _ScanResultState extends State<ScanResult> {
 
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    return Scaffold(
+     return Scaffold(
         backgroundColor: const Color(0xFF3D82AE),
       body: Stack(
         children: [
