@@ -20,3 +20,7 @@ List ingredient_num_3=[];
 List ingredient_name_4=[];
 List ingredient_exp_4=[];
 List ingredient_num_4=[];
+
+int userPoint;
+int stage;
+String latest;

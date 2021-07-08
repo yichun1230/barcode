@@ -11,6 +11,8 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  timelines: ^0.1.0
+  progress_timeline: ^0.0.5
   date_format: ^2.0.2
   percent_indicator: ^3.0.1
   curved_navigation_bar: ^1.0.1
